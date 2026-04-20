@@ -1,0 +1,22 @@
+# Core (Part 1+)
+datasets>=2.16.0
+huggingface_hub>=0.20.0
+tqdm>=4.66.0
+
+# Tokenization (Part 1)
+sentencepiece>=0.1.99
+tokenizers>=0.15.0
+
+# SVG / XML (Part 1 validation & Part 4 metrics)
+lxml>=5.0.0
+cairosvg>=2.7.0
+
+# Training (Part 2+; install torch for your platform if needed)
+torch>=2.1.0
+
+# Plots & tables
+numpy>=1.24.0
+matplotlib>=3.8.0
+
+# μP (Part 3)
+mup>=1.0.0
