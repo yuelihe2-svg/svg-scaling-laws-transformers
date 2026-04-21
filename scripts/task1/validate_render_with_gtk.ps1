@@ -1,7 +1,7 @@
 # Run validate_render.py with GTK3 Runtime Cairo DLLs (default install path).
 # Usage (from repo root):
-#   .\scripts\validate_render_with_gtk.ps1
-#   .\scripts\validate_render_with_gtk.ps1 -MaxSamples 500
+#   .\scripts\task1\validate_render_with_gtk.ps1
+#   .\scripts\task1\validate_render_with_gtk.ps1 -MaxSamples 500
 
 param(
     [string]$Jsonl = "data/processed/train.jsonl",

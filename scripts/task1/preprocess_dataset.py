@@ -2,7 +2,7 @@
 Part 1 — Build cleaned SVG splits, train a SentencePiece BPE model, filter by token length, save stats.
 
 Run from repository root:
-  python scripts/preprocess_dataset.py --output-dir data/processed
+  python scripts/task1/preprocess_dataset.py --output-dir data/processed
 """
 
 from __future__ import annotations
@@ -21,7 +21,7 @@ import numpy as np
 from datasets import DatasetDict, load_dataset
 from tqdm import tqdm
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -34,7 +34,7 @@ except ImportError as e:  # pragma: no cover
 
 
 def _repo_root() -> Path:
-    return Path(__file__).resolve().parents[1]
+    return Path(__file__).resolve().parents[2]
 
 
 def _normalize_hf_filename(raw: object) -> int | str:

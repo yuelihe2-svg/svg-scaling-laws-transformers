@@ -10,7 +10,7 @@ gallery.html embeds each SVG **inline** (raw <svg>...</svg>) so file:// works in
 Use a real browser — not Notepad, not the Cursor/VS Code preview.
 
 Usage (from repo root):
-  python scripts/render_svg_examples.py --jsonl data/processed/train.jsonl --out-dir outputs/figures
+  python scripts/task1/render_svg_examples.py --jsonl data/processed/train.jsonl --out-dir outputs/task1
 """
 
 from __future__ import annotations
@@ -24,7 +24,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -107,7 +107,7 @@ def _try_all_png(
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--jsonl", type=Path, required=True, help="Usually data/processed/train.jsonl")
-    p.add_argument("--out-dir", type=Path, default=ROOT / "outputs" / "figures")
+    p.add_argument("--out-dir", type=Path, default=ROOT / "outputs" / "task1")
     p.add_argument("--png-size", type=int, default=256, help="Raster width/height in pixels.")
     p.add_argument(
         "--quantiles",

@@ -38,7 +38,7 @@ $env:CAIROCFFI_DLL_DIRECTORIES = 'C:\Program Files\GTK3-Runtime Win64\bin'
 4. **Check** render validation on a sample of your processed data:
 
 ```powershell
-python scripts/validate_render.py --jsonl data/processed/train.jsonl --max-samples 200
+python scripts/task1/validate_render.py --jsonl data/processed/train.jsonl --max-samples 200
 ```
 
 **Alternative (MSYS2):** install `mingw-w64-x86_64-cairo` with `pacman` and add `C:\msys64\mingw64\bin` to PATH (or set `CAIROCFFI_DLL_DIRECTORIES` to that `bin` folder).
@@ -48,7 +48,7 @@ python scripts/validate_render.py --jsonl data/processed/train.jsonl --max-sampl
 From the **repository root**:
 
 ```bash
-python scripts/verify_dataset.py
+python scripts/task1/verify_dataset.py
 ```
 
 You should see split names, row counts, and a short preview of the `Svg` field from `starvector/svg-icons-simple`.
@@ -58,7 +58,7 @@ You should see split names, row counts, and a short preview of the `Svg` field f
 From the **repository root**:
 
 ```bash
-python scripts/preprocess_dataset.py --output-dir data/processed
+python scripts/task1/preprocess_dataset.py --output-dir data/processed
 ```
 
 This will:
@@ -72,7 +72,7 @@ This will:
 The assignment asks for **≥100M training tokens**. With icons-only data you may see a **warning** and ~tens of millions of tokens. Merge extra Hugging Face datasets (same `Filename` / `Svg` schema), for example:
 
 ```bash
-python scripts/preprocess_dataset.py --output-dir data/processed \
+python scripts/task1/preprocess_dataset.py --output-dir data/processed \
   --dataset starvector/svg-icons-simple \
   --extra-datasets starvector/svg-emoji-simple
 ```
@@ -86,17 +86,17 @@ Useful flags: `--vocab-size`, `--max-token-len`, `--seed`, `--render-check` (opt
 After `train.jsonl` exists:
 
 ```bash
-python scripts/render_svg_examples.py --jsonl data/processed/train.jsonl --out-dir outputs/figures
+python scripts/task1/render_svg_examples.py --jsonl data/processed/train.jsonl --out-dir outputs/task1
 ```
 
-This writes **SVG** files and **`gallery.html`** under `outputs/figures/`. **`gallery.html` embeds each SVG as base64**, so double‑clicking works in Edge/Chrome (older versions used `<object src=".svg">`, which `file://` often blocks).
+This writes **SVG** files and **`gallery.html`** under `outputs/task1/`. **`gallery.html` embeds each SVG as base64**, so double‑clicking works in Edge/Chrome (older versions used `<object src=".svg">`, which `file://` often blocks).
 
 **PNG files** are written if any of these works: **CairoSVG** (needs Cairo DLL), **Inkscape** on `PATH`, or **ImageMagick** (`magick` on `PATH`). On Windows, installing [Inkscape](https://inkscape.org/release/) is usually the easiest way to get PNG without Conda.
 
 **PowerShell:** put the command on **one line**, or use a line break with backtick `` ` `` (not `^`):
 
 ```powershell
-python scripts/preprocess_dataset.py --output-dir data/processed --dataset starvector/svg-icons-simple --extra-datasets starvector/svg-emoji-simple
+python scripts/task1/preprocess_dataset.py --output-dir data/processed --dataset starvector/svg-icons-simple --extra-datasets starvector/svg-emoji-simple
 ```
 
 ## Google Colab
@@ -104,6 +104,6 @@ python scripts/preprocess_dataset.py --output-dir data/processed --dataset starv
 1. **Runtime → Change runtime type → GPU** (optional for this step).
 2. Clone your fork/repo, `cd` into it, then either:
    - Open `notebooks/01_verify_dataset.ipynb` or `notebooks/02_preprocess.ipynb` and run all cells, or
-   - Run `pip install -r requirements.txt` and the scripts under `scripts/` in code cells.
+   - Run `pip install -r requirements.txt` and the scripts under `scripts/task1/` (and later tasks) in code cells.
 
 Large downloads and checkpoints should go under `data/`, `outputs/`, or `checkpoints/` (ignored by git by default).

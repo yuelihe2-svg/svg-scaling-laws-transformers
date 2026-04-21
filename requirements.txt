@@ -17,6 +17,7 @@ torch>=2.1.0
 # Plots & tables
 numpy>=1.24.0
 matplotlib>=3.8.0
+scipy>=1.10.0
 
 # μP (Part 3)
 mup>=1.0.0

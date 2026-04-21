@@ -4,7 +4,7 @@
 
 ### Overview
 
-This report summarizes **Task 1**: building a cleaned SVG corpus, training a BPE tokenizer, splitting data by file, and recording dataset statistics. Processing was implemented in `scripts/preprocess_dataset.py` with cleaning in `svg_scaling/cleaning.py`. Artifacts are stored under `data/processed/`.
+This report summarizes **Task 1**: building a cleaned SVG corpus, training a BPE tokenizer, splitting data by file, and recording dataset statistics. Processing was implemented in `scripts/task1/preprocess_dataset.py` with cleaning in `svg_scaling/cleaning.py`. Artifacts are stored under `data/processed/`; Task 1 figures and example renders are under `outputs/task1/`.
 
 ### Cleaned corpus
 
@@ -60,8 +60,8 @@ Equivalently: **364,130 − 103 = 364,027** files remain in the three jsonl file
 
 ### Figures and example visuals
 
-- **Statistics figure:** Sequence-length distribution is plotted from `stats.json` as **`outputs/figures/train_length_histogram.png`** (and **`train_length_histogram.pdf`** if generated) for the report.
-- **Example SVGs by complexity:** **`outputs/figures/gallery.html`** embeds inline SVGs at approximate quantiles **0.10 / 0.50 / 0.90** of `num_tokens` on the training set, with companion `.svg` files in the same folder. These illustrate short-, medium-, and long-BPE examples for documentation.
+- **Statistics figure:** Sequence-length distribution is plotted from `stats.json` as **`outputs/task1/train_length_histogram.png`** (and **`train_length_histogram.pdf`** if generated) for the report.
+- **Example SVGs by complexity:** **`outputs/task1/gallery.html`** embeds inline SVGs at approximate quantiles **0.10 / 0.50 / 0.90** of `num_tokens` on the training set, with companion `.svg` files in the same folder. These illustrate short-, medium-, and long-BPE examples for documentation.
 
 ### Reproducibility
 
@@ -74,7 +74,7 @@ Equivalently: **364,130 − 103 = 364,027** files remain in the three jsonl file
 
 ### 概述
 
-本报告总结**任务一**：构建清洗后的 SVG 语料、训练 BPE 分词器、按**文件**划分数据集，并整理数据统计。流程由 `scripts/preprocess_dataset.py` 实现，清洗逻辑在 `svg_scaling/cleaning.py`。产物位于 `data/processed/`。
+本报告总结**任务一**：构建清洗后的 SVG 语料、训练 BPE 分词器、按**文件**划分数据集，并整理数据统计。流程由 `scripts/task1/preprocess_dataset.py` 实现，清洗逻辑在 `svg_scaling/cleaning.py`。数据产物位于 `data/processed/`；任务一图表与示例渲染位于 `outputs/task1/`。
 
 ### 干净数据集（cleaned corpus）
 
@@ -130,8 +130,8 @@ Equivalently: **364,130 − 103 = 364,027** files remain in the three jsonl file
 
 ### 数据统计图与样例图
 
-- **统计图：** 由 `stats.json` 中的长度分布绘制的 **`outputs/figures/train_length_histogram.png`**（及若已生成的 **`train_length_histogram.pdf`**），用于报告中的序列长度分布展示。
-- **样例图：** **`outputs/figures/gallery.html`** 内嵌三条不同 **BPE 长度分位数**（约 **0.10 / 0.50 / 0.90**）的训练样本 SVG，同目录下有对应 **`.svg`** 文件，用于展示不同复杂度示例。
+- **统计图：** 由 `stats.json` 中的长度分布绘制的 **`outputs/task1/train_length_histogram.png`**（及若已生成的 **`train_length_histogram.pdf`**），用于报告中的序列长度分布展示。
+- **样例图：** **`outputs/task1/gallery.html`** 内嵌三条不同 **BPE 长度分位数**（约 **0.10 / 0.50 / 0.90**）的训练样本 SVG，同目录下有对应 **`.svg`** 文件，用于展示不同复杂度示例。
 
 ### 可复现性
 

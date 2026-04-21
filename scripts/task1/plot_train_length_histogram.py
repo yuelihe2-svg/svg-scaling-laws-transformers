@@ -22,7 +22,7 @@ def main() -> int:
     p.add_argument(
         "--out",
         type=Path,
-        default=Path("outputs/figures/train_length_histogram"),
+        default=Path("outputs/task1/train_length_histogram"),
         help="Output path without extension; writes .png and .pdf",
     )
     p.add_argument(

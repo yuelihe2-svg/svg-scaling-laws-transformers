@@ -2,7 +2,7 @@
 Smoke-test Hugging Face access and inspect starvector/svg-icons-simple.
 
 Usage (from repo root):
-  python scripts/verify_dataset.py
+  python scripts/task1/verify_dataset.py
 """
 
 from __future__ import annotations
