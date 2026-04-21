@@ -1,10 +1,24 @@
 # svg-scaling-laws-transformers
 
-Scaling law study for decoder-only Transformer language models on SVG data, including preprocessing, LR sweeps, µP comparison, and sample generation.
+Decoder-only **Transformer language models** on **SVG** text (SentencePiece BPE), with **Part 1 data preprocessing**, **Part 2 scaling-law experiments** (LR sweep, 1-epoch runs, plots), and optional extensions (e.g. **μP** in `requirements.txt` for later parts).
+
+## What’s in this repo
+
+| Area | Contents |
+|------|-----------|
+| **Part 1 — data** | `scripts/task1/` (`preprocess_dataset.py`, `verify_dataset.py`, `render_svg_examples.py`, …). Artifacts: `data/processed/` (`train.jsonl`, `val.jsonl`, `test.jsonl`, `spm.model`, `stats.json`, …). |
+| **Part 2 — scaling** | `scripts/task2/` (`train.py`, `lr_sweep.py`, `model.py`, `data.py`, `figure_report.py`, `plot_scaling.py`, `config_presets.py`). See **`scripts/task2/README.md`** for Colab-oriented commands. |
+| **Outputs** | `outputs/task1/` (histogram, SVG gallery). `outputs/task2/<preset>/` (`config.json`, `summary.json`, `metrics.jsonl`), LR sweep dirs, **`outputs/task2/figures_report/`** (scaling / loss / throughput figures). |
+| **Reports** | `reports/task1_data_preprocessing_report.md`, `reports/task2_transformer_scaling_report.md` |
+| **Notebooks** | `notebooks/01_verify_dataset.ipynb`, `02_preprocess.ipynb`, `03_task2_colab_scaling.ipynb`, `task2_A100.ipynb`, `task2_T4.ipynb` |
+
+**Course runs in this fork:** Part 1 pipeline produces **≥100M** BPE train tokens when merging the recommended Hugging Face splits (see Task 1 report). Part 2 was trained primarily on **Google Colab** (GPU); full **Tiny→XL** scaling at fixed **`tokens_per_batch=32768`** completed on **A100** after **T4 OOM** on the largest model (see Task 2 report).
+
+---
 
 ## Environment (local)
 
-1. **Python 3.10+** recommended (matches Colab closely).
+1. **Python 3.10+** recommended (close to Colab).
 2. Create a virtual environment:
 
 ```bash
@@ -21,29 +35,33 @@ pip install -U pip
 pip install -r requirements.txt
 ```
 
-If PyTorch fails to install, follow [https://pytorch.org](https://pytorch.org) for your OS, then run `pip install -r requirements.txt` again.
+If **PyTorch** fails to install, follow [pytorch.org](https://pytorch.org) for your OS, then run `pip install -r requirements.txt` again. **GPU training** needs a CUDA build of PyTorch; CPU is fine only for smoke tests.
 
 ### Cairo on Windows (CairoSVG / `--render-check`)
 
-`pip install cairosvg` only installs Python wrappers; **Cairo itself must be on your machine** (native `libcairo-2.dll`). Without it you will see errors like `no library called "cairo-2" was found`.
+`pip install cairosvg` only installs Python wrappers; **Cairo** must be available as **`libcairo-2.dll`**. Without it you may see `no library called "cairo-2" was found`.
 
-1. **Install GTK3 Runtime (64-bit)** from the [GTK-for-Windows Runtime installer releases](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases). Choose the **Win64** build that matches your Python (64-bit). During setup, **leave “Set up PATH” enabled** so `libcairo-2.dll` is discoverable.
-2. **Close and reopen** Cursor / PowerShell / Terminal so the updated `PATH` is picked up.
-3. If Cairo still is not found, point **cairocffi** at the DLL folder explicitly (PowerShell; adjust the path if your install location differs):
+1. **Install GTK3 Runtime (64-bit)** from [GTK-for-Windows Runtime installer releases](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases). Prefer **Win64** matching 64-bit Python; leave **“Set up PATH”** enabled.
+2. **Restart** the terminal / IDE so `PATH` updates.
+3. If needed, set the DLL folder explicitly (PowerShell; adjust path):
 
 ```powershell
 $env:CAIROCFFI_DLL_DIRECTORIES = 'C:\Program Files\GTK3-Runtime Win64\bin'
 ```
 
-4. **Check** render validation on a sample of your processed data:
+4. **Smoke-test** render validation on a sample:
 
 ```powershell
 python scripts/task1/validate_render.py --jsonl data/processed/train.jsonl --max-samples 200
 ```
 
-**Alternative (MSYS2):** install `mingw-w64-x86_64-cairo` with `pacman` and add `C:\msys64\mingw64\bin` to PATH (or set `CAIROCFFI_DLL_DIRECTORIES` to that `bin` folder).
+**Alternative (MSYS2):** `mingw-w64-x86_64-cairo` and add `C:\msys64\mingw64\bin` to `PATH` (or `CAIROCFFI_DLL_DIRECTORIES`).
 
-## Step 1 — Verify dataset access
+---
+
+## Part 1 — Verify access, preprocess, figures
+
+### Verify dataset access
 
 From the **repository root**:
 
@@ -51,25 +69,17 @@ From the **repository root**:
 python scripts/task1/verify_dataset.py
 ```
 
-You should see split names, row counts, and a short preview of the `Svg` field from `starvector/svg-icons-simple`.
+Or open `notebooks/01_verify_dataset.ipynb`.
 
-## Step 2 — Clean, tokenize, and split (Part 1 core)
-
-From the **repository root**:
+### Clean, tokenize, split (core pipeline)
 
 ```bash
 python scripts/task1/preprocess_dataset.py --output-dir data/processed
 ```
 
-This will:
+This merges configured Hugging Face sources, **cleans** SVGs, trains **SentencePiece** BPE (default vocab **4096**) on **train** only, drops sequences over **2048** BPE tokens, and writes `train.jsonl` / `val.jsonl` / `test.jsonl`, `spm.model`, `spm.vocab`, `stats.json`.
 
-- Merge unique files from `starvector/svg-icons-simple`, then shuffle and split **98% / 1% / 1%** by file ID.
-- **Clean** SVGs (strip comments, remove `metadata`/`title`/`desc`, normalize whitespace, round decimals, re-validate XML).
-- **Train** a SentencePiece BPE model (**4096** vocab by default) on the **train** split only.
-- **Drop** sequences longer than **2048** tokens (per BPE), then write token counts per row.
-- Save `data/processed/train.jsonl`, `val.jsonl`, `test.jsonl`, `spm.model`, `spm.vocab`, and `stats.json` (histogram + token totals).
-
-The assignment asks for **≥100M training tokens**. With icons-only data you may see a **warning** and ~tens of millions of tokens. Merge extra Hugging Face datasets (same `Filename` / `Svg` schema), for example:
+To match the course token budget, use the same dataset flags as in your report (e.g. icons + emoji + **subsampled fonts**); example:
 
 ```bash
 python scripts/task1/preprocess_dataset.py --output-dir data/processed \
@@ -77,33 +87,76 @@ python scripts/task1/preprocess_dataset.py --output-dir data/processed \
   --extra-datasets starvector/svg-emoji-simple
 ```
 
-Useful flags: `--vocab-size`, `--max-token-len`, `--seed`, `--render-check` (optional CairoSVG gate; slower).
+Useful flags: `--vocab-size`, `--max-token-len`, `--seed`, `--render-check` (optional; slow). **Full narrative + statistics:** `reports/task1_data_preprocessing_report.md`.
 
-### Report figures (rendered SVGs)
-
-**What it means:** SVG source is plain text; “rendering” means turning it into a **picture** (PNG) so readers see the actual icon/shape. The course asks for examples at **different complexity levels** — use short vs long sequences (e.g. by `num_tokens` after BPE).
-
-After `train.jsonl` exists:
+### Task 1 figures (length histogram + SVG gallery)
 
 ```bash
 python scripts/task1/render_svg_examples.py --jsonl data/processed/train.jsonl --out-dir outputs/task1
 ```
 
-This writes **SVG** files and **`gallery.html`** under `outputs/task1/`. **`gallery.html` embeds each SVG as base64**, so double‑clicking works in Edge/Chrome (older versions used `<object src=".svg">`, which `file://` often blocks).
+Writes **`gallery.html`** and example **`.svg`** files. **PNG** export works if **CairoSVG** (with Cairo DLL), **Inkscape**, or **ImageMagick** is available ([Inkscape](https://inkscape.org/release/) is often easiest on Windows).
 
-**PNG files** are written if any of these works: **CairoSVG** (needs Cairo DLL), **Inkscape** on `PATH`, or **ImageMagick** (`magick` on `PATH`). On Windows, installing [Inkscape](https://inkscape.org/release/) is usually the easiest way to get PNG without Conda.
+**PowerShell:** long commands on one line, or use backtick `` ` `` for line continuation (not `^`).
 
-**PowerShell:** put the command on **one line**, or use a line break with backtick `` ` `` (not `^`):
+---
 
-```powershell
-python scripts/task1/preprocess_dataset.py --output-dir data/processed --dataset starvector/svg-icons-simple --extra-datasets starvector/svg-emoji-simple
+## Part 2 — Transformer scaling (Colab / GPU)
+
+Training code lives under **`scripts/task2/`**. Typical workflow:
+
+1. **LR sweep on Tiny** (7 log-spaced learning rates, cosine + warmup per run):
+
+```bash
+python -m scripts.task2.lr_sweep \
+  --train-jsonl data/processed/train.jsonl \
+  --val-jsonl data/processed/val.jsonl \
+  --spm-model data/processed/spm.model \
+  --lrs 1e-4 3e-4 1e-3 3e-3 1e-2 3e-2 1e-1 \
+  --out-csv outputs/task2/lr_sweep.csv
 ```
 
-## Google Colab
+2. **Train each preset** (1 epoch, fixed `tokens-per-batch` and `block-size`; only `--preset` changes):
 
-1. **Runtime → Change runtime type → GPU** (optional for this step).
-2. Clone your fork/repo, `cd` into it, then either:
-   - Open `notebooks/01_verify_dataset.ipynb` or `notebooks/02_preprocess.ipynb` and run all cells, or
-   - Run `pip install -r requirements.txt` and the scripts under `scripts/task1/` (and later tasks) in code cells.
+```bash
+python -m scripts.task2.train \
+  --train-jsonl data/processed/train.jsonl \
+  --val-jsonl data/processed/val.jsonl \
+  --spm-model data/processed/spm.model \
+  --preset tiny --lr <BEST_FROM_SWEEP> \
+  --tokens-per-batch 32768 --block-size 512 \
+  --out-dir outputs/task2/tiny
+```
 
-Large downloads and checkpoints should go under `data/`, `outputs/`, or `checkpoints/` (ignored by git by default).
+Repeat for `small`, `medium`, `large`, `xl`. **Large/XL** on **Colab T4 (~15GB)** may **OOM** at full batch tokens; **A100** (or smaller `--tokens-per-batch`, with report justification) is often required.
+
+3. **Figures for the report** (scaling plot, train-loss grid, throughput / memory / wall-time bars, summary table):
+
+```bash
+python -m scripts.task2.figure_report \
+  --task2-dir outputs/task2 \
+  --out-dir outputs/task2/figures_report
+```
+
+**Colab:** use **`notebooks/task2_A100.ipynb`** / **`task2_T4.ipynb`** or **`03_task2_colab_scaling.ipynb`**; point `--train-jsonl`, `--val-jsonl`, `--spm-model` at your Drive or `/content` paths after uploading Part 1 artifacts.
+
+**Write-up:** `reports/task2_transformer_scaling_report.md` (LR sweep, fair comparison table, power-law fit, metrics, compute notes).
+
+**More detail:** `scripts/task2/README.md` (nanoGPT-style credit, metric fields in `metrics.jsonl`).
+
+---
+
+## Reports (submission)
+
+- **Part 1:** `reports/task1_data_preprocessing_report.md` — corpus, tokenizer, splits, statistics, figures.
+- **Part 2:** `reports/task2_transformer_scaling_report.md` — LR sweep, scaling law, tables, Colab/T4/A100 notes.
+
+---
+
+## Google Colab (general)
+
+1. **Runtime → Change runtime type → GPU** (T4 vs A100 affects max model / batch).
+2. Clone this repo, `cd` into it, `pip install -r requirements.txt` (or install `torch`, `sentencepiece`, `numpy`, `matplotlib`, `scipy`, `tqdm` per `scripts/task2/README.md`).
+3. Upload or mount **`data/processed/`** (large `jsonl` + `spm.model`); write **`outputs/`** under the clone or on Drive.
+
+Large generated files stay under `data/`, `outputs/`, and are **gitignored** by default; keep a zip or Drive copy for reproducibility.
