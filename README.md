@@ -8,6 +8,7 @@ Decoder-only **Transformer language models** on **SVG** text (SentencePiece BPE)
 |------|-----------|
 | **Part 1 — data** | `scripts/task1/` (`preprocess_dataset.py`, `verify_dataset.py`, `render_svg_examples.py`, …). Artifacts: `data/processed/` (`train.jsonl`, `val.jsonl`, `test.jsonl`, `spm.model`, `stats.json`, …). |
 | **Part 2 — scaling** | `scripts/task2/` (`train.py`, `lr_sweep.py`, `model.py`, `data.py`, `figure_report.py`, `plot_scaling.py`, `config_presets.py`). See **`scripts/task2/README.md`** for Colab-oriented commands. |
+| **Part 3 — μP** | `scripts/task3/` (`train_mup.py`, `lr_sweep_mup.py`, `model_mup.py`, …). Notebook: **`notebooks/task3_colab_mup.ipynb`**. See **`scripts/task3/README.md`**. |
 | **Outputs** | `outputs/task1/` (histogram, SVG gallery). `outputs/task2/<preset>/` (`config.json`, `summary.json`, `metrics.jsonl`), LR sweep dirs, **`outputs/task2/figures_report/`** (scaling / loss / throughput figures). |
 | **Reports** | `reports/task1_data_preprocessing_report.md`, `reports/task2_transformer_scaling_report.md` |
 | **Notebooks** | `notebooks/01_verify_dataset.ipynb`, `02_preprocess.ipynb`, `03_task2_colab_scaling.ipynb`, `task2_A100.ipynb`, `task2_T4.ipynb` |
@@ -143,6 +144,20 @@ python -m scripts.task2.figure_report \
 **Write-up:** `reports/task2_transformer_scaling_report.md` (LR sweep, fair comparison table, power-law fit, metrics, compute notes).
 
 **More detail:** `scripts/task2/README.md` (nanoGPT-style credit, metric fields in `metrics.jsonl`).
+
+---
+
+## Part 3 — μP scaling (`mup`)
+
+Code: **`scripts/task3/`** (`model_mup.py`, `train_mup.py`, `lr_sweep_mup.py`, `plot_sp_vs_mup.py`, `config_presets.py`). **Read `scripts/task3/README.md`** for the Part 2 vs `MU_PRESETS` depth/heads note (required for honest SP vs μP plots).
+
+**Colab notebook:** `notebooks/task3_colab_mup.ipynb` (clone → install `mup` → LR sweep → train all sizes → overlay SP vs μP → extrapolation sketch).
+
+```bash
+python -m scripts.task3.lr_sweep_mup --train-jsonl ... --val-jsonl ... --spm-model ... --lrs 1e-4 3e-4 1e-3 3e-3 1e-2 3e-2 1e-1 --out-csv outputs/task3/lr_sweep_mup.csv
+python -m scripts.task3.train_mup --preset xl --lr <BEST> --train-jsonl ... --out-dir outputs/task3/xl
+python -m scripts.task3.plot_sp_vs_mup --task2-dir outputs/task2 --task3-dir outputs/task3 --out outputs/task3/figures/sp_vs_mup_scaling.png
+```
 
 ---
 
