@@ -1,0 +1,8 @@
+{
+  "preset": "tiny",
+  "n_params": 1761792,
+  "val_loss": 2.265572327375412,
+  "wall_time_epoch_s": 104.88251740299995,
+  "steps": 3151,
+  "train_jsonl": "/content/drive/MyDrive/svg_task2_data/train.jsonl"
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "preset": "tiny",
+    "n_params": 1761792,
+    "val_loss": 1.2020600736141205
+  },
+  {
+    "preset": "small",
+    "n_params": 4120704,
+    "val_loss": 1.113791686296463
+  },
+  {
+    "preset": "medium",
+    "n_params": 13549824,
+    "val_loss": 1.072504571080208
+  },
+  {
+    "preset": "large",
+    "n_params": 35386368,
+    "val_loss": 1.0072157993912696
+  },
+  {
+    "preset": "xl",
+    "n_params": 90842112,
+    "val_loss": 0.9942182779312134
+  }
+]

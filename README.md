@@ -174,4 +174,4 @@ python -m scripts.task3.plot_sp_vs_mup --task2-dir outputs/task2 --task3-dir out
 2. Clone this repo, `cd` into it, `pip install -r requirements.txt` (or install `torch`, `sentencepiece`, `numpy`, `matplotlib`, `scipy`, `tqdm` per `scripts/task2/README.md`).
 3. Upload or mount **`data/processed/`** (large `jsonl` + `spm.model`); write **`outputs/`** under the clone or on Drive.
 
-Large generated files stay under `data/`, `outputs/`, and are **gitignored** by default; keep a zip or Drive copy for reproducibility.
+Large raw corpora stay under `data/` (**gitignored**). Under `outputs/`, only **`metrics.jsonl`** is ignored by git (very large); you **may commit** `summary.json`, `config.json`, CSV sweeps, and report figures so Colab clones can read Part 2 points without re-uploading.

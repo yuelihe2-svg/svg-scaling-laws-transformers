@@ -1,0 +1,9 @@
+{
+  "parameterization": "mup",
+  "preset": "tiny",
+  "n_params": 3294720,
+  "val_loss": 5.677116191387176,
+  "wall_time_epoch_s": 48.724951899959706,
+  "steps": 30,
+  "train_jsonl": "data\\processed\\train.jsonl"
+}

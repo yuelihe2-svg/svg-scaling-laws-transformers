@@ -1,0 +1,8 @@
+{
+  "preset": "xl",
+  "n_params": 90842112,
+  "val_loss": 0.9942182779312134,
+  "wall_time_epoch_s": 3410.487334,
+  "steps": 3151,
+  "train_jsonl": "/content/drive/MyDrive/svg_task2_data/train.jsonl"
+}

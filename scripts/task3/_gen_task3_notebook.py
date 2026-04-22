@@ -39,8 +39,8 @@ This notebook runs **Part 3** using the repository Python modules:
 ## Before you start
 
 1. **Runtime → Change runtime type → GPU** (A100 recommended for XL at full batch; T4 may OOM).
-2. Put Part 1 artifacts on Drive (or `/content`): `train.jsonl`, `val.jsonl`, `spm.model`.
-3. (Optional) Complete **Part 2** first so `outputs/task2/{tiny,...,xl}/summary.json` exist for the comparison plot.
+2. Put **Part 1** artifacts on Drive (or `/content`): `train.jsonl`, `val.jsonl`, `spm.model` — these stay **large** and are **not** in git (`data/` is ignored).
+3. **Part 2 (SP) points for the comparison plot:** after this change, you can **`git add` + push** the small files under `outputs/task2/{tiny,...,xl}/summary.json` (and optional `config.json`, figures). **Do not** commit `metrics.jsonl` (still gitignored, very large). A fresh `git clone` in Colab then **already contains** those summaries — no manual upload of Part 2 results.
 
 ## μP presets note
 
@@ -83,6 +83,34 @@ print("REPO_ROOT:", REPO_ROOT)
 print("cwd:", os.getcwd())"""
         )
     )
+    cells.append(
+        md(
+            """## 1b) Part 2 summaries bundled in the repo (for Section 6)
+
+After you **push** `outputs/task2/<preset>/summary.json` to GitHub, this clone has them under `REPO_ROOT`. The next cell only **checks** paths; it does not download anything."""
+        )
+    )
+    cells.append(
+        code(
+            r"""import os
+
+REPO_ROOT = os.environ["REPO_ROOT"]
+PRESETS = ["tiny", "small", "medium", "large", "xl"]
+ok = True
+for name in PRESETS:
+    p = os.path.join(REPO_ROOT, "outputs", "task2", name, "summary.json")
+    ex = os.path.exists(p)
+    ok = ok and ex
+    print("Part2", name, "summary.json ->", ex, p)
+if ok:
+    print("OK: all Part 2 summaries present; Section 6 plot will work after Part 3 training.")
+else:
+    print(
+        "WARN: some Part 2 summaries missing. Either run Part 2 in Colab earlier, or commit & push\n"
+        "  outputs/task2/<preset>/summary.json from your PC, then re-clone / git pull."
+    )"""
+        )
+    )
     cells.append(md("""## 2) Install dependencies (includes `mup`)"""))
     cells.append(
         code(
@@ -101,9 +129,9 @@ if torch.cuda.is_available():
     )
     cells.append(
         md(
-            """## 3) Mount Google Drive and set `DATA_ROOT`
+            """## 3) Mount Google Drive and set `DATA_ROOT` (Part 1 data only)
 
-Change `DATA_ROOT` to the folder that contains `train.jsonl`, `val.jsonl`, and `spm.model`."""
+This step is **only** for `train.jsonl` / `val.jsonl` / `spm.model`. Part 2 scaling numbers should come from the **cloned repo** (`outputs/task2/.../summary.json`), not from Drive."""
         )
     )
     cells.append(
@@ -220,7 +248,7 @@ print("All μP presets finished.")"""
         md(
             """## 6) Plot Part 2 (SP) vs Part 3 (μP)
 
-Requires both `outputs/task2/<preset>/summary.json` and `outputs/task3/<preset>/summary.json`."""
+Reads **`REPO_ROOT/outputs/task2/...`** (from git if you pushed Part 2 summaries) and **`REPO_ROOT/outputs/task3/...`** (written by Section 5 in this session). Both need `summary.json` for each preset."""
         )
     )
     cells.append(
