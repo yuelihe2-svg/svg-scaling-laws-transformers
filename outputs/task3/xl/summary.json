@@ -1,0 +1,9 @@
+{
+  "parameterization": "mup",
+  "preset": "xl",
+  "n_params": 90842112,
+  "val_loss": 1.032675589621067,
+  "wall_time_epoch_s": 3911.1104757919966,
+  "steps": 3151,
+  "train_jsonl": "/content/drive/MyDrive/svg_task2_data/train.jsonl"
+}

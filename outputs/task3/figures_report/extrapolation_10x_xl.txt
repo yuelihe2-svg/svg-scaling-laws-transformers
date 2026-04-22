@@ -1,0 +1,7 @@
+Extrapolation using the better RMSE fit (lower is better).
+chosen_curve = mup
+XL_N = 90842112
+N_pred = 10 * XL_N = 908421120
+predicted_val_loss = 0.997655
+approx_95pct_interval = [0.915738, 1.079572]  (delta-method; small-n warning)
+fit_rmse = 0.007015

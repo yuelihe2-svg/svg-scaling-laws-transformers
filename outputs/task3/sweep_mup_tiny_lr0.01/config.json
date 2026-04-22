@@ -1,0 +1,23 @@
+{
+  "parameterization": "mup",
+  "preset": "tiny",
+  "approx_params": "~3M \u03bcP",
+  "n_params": 3343872,
+  "d_model": 128,
+  "n_layers": 12,
+  "n_heads": 8,
+  "d_ff": 512,
+  "vocab_size": 3535,
+  "block_size": 512,
+  "tokens_per_batch": 32768,
+  "batch_size": 64,
+  "lr": 0.01,
+  "min_lr": 1e-05,
+  "warmup_steps": 2000,
+  "epochs": 1,
+  "max_steps": 3151,
+  "train_tokens": 103255934,
+  "val_tokens": 1052909,
+  "base_preset": "tiny",
+  "delta_preset": "small"
+}
