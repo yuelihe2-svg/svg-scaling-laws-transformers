@@ -226,6 +226,95 @@ print("Optional mirror: /content/drive/MyDrive/svg_task4_outputs/task4_repo_mirr
         )
     )
 
+    cells.append(md("## 9) Bundle the necessary artifacts into a single ZIP"))
+    cells.append(
+        md(
+            """This creates a compact ZIP in `/content/` that you can download.
+If Drive has space, it can also copy the ZIP into `TASK4_OUT/`."""
+        )
+    )
+    cells.append(
+        code(
+            r"""import os, shutil
+from pathlib import Path
+from datetime import datetime
+
+# Uses: MODEL_DIR, SAMPLES_DIR, FIG_DIR, EVAL_JSON, TASK4_OUT (defined above)
+
+bundle_root = Path("/content") / f"task4_bundle_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+bundle_root.mkdir(parents=True, exist_ok=True)
+
+# 1) pick checkpoint
+ckpt_dir = Path(MODEL_DIR) / "checkpoints"
+final_ckpt = ckpt_dir / "final.pt"
+if final_ckpt.exists():
+    ckpt_path = final_ckpt
+else:
+    step_ckpts = sorted(ckpt_dir.glob("step_*.pt"))
+    ckpt_path = step_ckpts[-1] if step_ckpts else None
+
+if ckpt_path is None:
+    raise FileNotFoundError(f"No checkpoint found under {ckpt_dir}")
+print("Bundling checkpoint:", ckpt_path)
+
+# 2) copy model metadata + checkpoint
+(model_out := bundle_root / "best_xl_sp").mkdir(parents=True, exist_ok=True)
+for name in ["config.json", "summary.json", "metrics.jsonl"]:
+    src = Path(MODEL_DIR) / name
+    if src.exists():
+        shutil.copy2(src, model_out / name)
+    else:
+        print("Missing (ok):", src)
+
+(model_ckpt_out := model_out / "checkpoints").mkdir(parents=True, exist_ok=True)
+shutil.copy2(ckpt_path, model_ckpt_out / ckpt_path.name)
+
+# 3) copy eval json if present
+src_eval = Path(EVAL_JSON)
+if src_eval.exists():
+    shutil.copy2(src_eval, bundle_root / "eval_metrics.json")
+else:
+    print("No eval_metrics.json yet (ok):", src_eval)
+
+# 4) copy samples / figures if present
+for src_dir, dst_name in [(SAMPLES_DIR, "samples"), (FIG_DIR, "figures_report")]:
+    src_dir = Path(src_dir)
+    if src_dir.exists():
+        shutil.copytree(src_dir, bundle_root / dst_name, dirs_exist_ok=True)
+    else:
+        print("Missing (ok):", src_dir)
+
+# 5) write a tiny manifest
+(bundle_root / "MANIFEST.txt").write_text(
+    "\n".join(
+        [
+            f"MODEL_DIR={MODEL_DIR}",
+            f"CHECKPOINT_BUNDLED={ckpt_path}",
+            f"SAMPLES_DIR={SAMPLES_DIR}",
+            f"FIG_DIR={FIG_DIR}",
+            f"EVAL_JSON={EVAL_JSON}",
+        ]
+    )
+    + "\n",
+    encoding="utf-8",
+)
+
+# 6) zip it
+zip_base = str(bundle_root)  # shutil.make_archive wants a str without .zip
+zip_path = shutil.make_archive(zip_base, "zip", root_dir=bundle_root)
+print("Created ZIP:", zip_path)
+
+# 7) optional copy to Drive (may fail if quota is full)
+try:
+    drive_dst = Path(TASK4_OUT) / Path(zip_path).name
+    shutil.copy2(zip_path, drive_dst)
+    print("Copied ZIP to Drive:", drive_dst)
+except Exception as e:
+    print("Could not copy ZIP to Drive (quota/full is common). Download from /content instead.")
+    print("Copy error:", repr(e))"""
+        )
+    )
+
     nb = {
         "nbformat": 4,
         "nbformat_minor": 5,

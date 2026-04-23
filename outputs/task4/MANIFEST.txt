@@ -1,0 +1,5 @@
+MODEL_DIR=/content/drive/MyDrive/svg_task4_outputs/best_xl_sp
+CHECKPOINT_BUNDLED=/content/drive/MyDrive/svg_task4_outputs/best_xl_sp/checkpoints/final.pt
+SAMPLES_DIR=/content/drive/MyDrive/svg_task4_outputs/samples
+FIG_DIR=/content/drive/MyDrive/svg_task4_outputs/figures_report
+EVAL_JSON=/content/drive/MyDrive/svg_task4_outputs/eval_metrics.json
