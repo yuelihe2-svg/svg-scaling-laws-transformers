@@ -1,0 +1,8 @@
+{
+  "test_nll": 0.8271895855665207,
+  "test_perplexity": 2.2868826125054245,
+  "num_generated": 15,
+  "xml_valid_rate": 0.6,
+  "struct_valid_rate": 0.6,
+  "render_rate": 0.6
+}

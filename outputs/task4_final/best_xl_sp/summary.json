@@ -1,0 +1,10 @@
+{
+  "part": 4,
+  "parameterization": "sp",
+  "preset": "xl",
+  "n_params": 90842112,
+  "val_loss": 0.8230862900614738,
+  "wall_time_s": 9446.020702983,
+  "steps": 22057,
+  "train_jsonl": "/content/drive/MyDrive/svg_task2_data/train.jsonl"
+}

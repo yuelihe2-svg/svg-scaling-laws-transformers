@@ -1,0 +1,157 @@
+[
+  {
+    "type": "unconditional",
+    "i": 0,
+    "temperature": 0.5,
+    "top_k": 50,
+    "top_p": 0.95,
+    "svg_path": "/content/task4_outputs_e7/samples/svg/uncond_00_t0.5.svg",
+    "render_ok": true,
+    "png_path": "/content/task4_outputs_e7/samples/png/uncond_00_t0.5.png"
+  },
+  {
+    "type": "unconditional",
+    "i": 1,
+    "temperature": 0.8,
+    "top_k": 50,
+    "top_p": 0.95,
+    "svg_path": "/content/task4_outputs_e7/samples/svg/uncond_01_t0.8.svg",
+    "render_ok": true,
+    "png_path": "/content/task4_outputs_e7/samples/png/uncond_01_t0.8.png"
+  },
+  {
+    "type": "unconditional",
+    "i": 2,
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 0.95,
+    "svg_path": "/content/task4_outputs_e7/samples/svg/uncond_02_t1.svg",
+    "render_ok": false,
+    "png_path": "/content/task4_outputs_e7/samples/png/uncond_02_t1.png"
+  },
+  {
+    "type": "unconditional",
+    "i": 3,
+    "temperature": 0.5,
+    "top_k": 50,
+    "top_p": 0.95,
+    "svg_path": "/content/task4_outputs_e7/samples/svg/uncond_03_t0.5.svg",
+    "render_ok": true,
+    "png_path": "/content/task4_outputs_e7/samples/png/uncond_03_t0.5.png"
+  },
+  {
+    "type": "unconditional",
+    "i": 4,
+    "temperature": 0.8,
+    "top_k": 50,
+    "top_p": 0.95,
+    "svg_path": "/content/task4_outputs_e7/samples/svg/uncond_04_t0.8.svg",
+    "render_ok": false,
+    "png_path": "/content/task4_outputs_e7/samples/png/uncond_04_t0.8.png"
+  },
+  {
+    "type": "unconditional",
+    "i": 5,
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 0.95,
+    "svg_path": "/content/task4_outputs_e7/samples/svg/uncond_05_t1.svg",
+    "render_ok": true,
+    "png_path": "/content/task4_outputs_e7/samples/png/uncond_05_t1.png"
+  },
+  {
+    "type": "unconditional",
+    "i": 6,
+    "temperature": 0.5,
+    "top_k": 50,
+    "top_p": 0.95,
+    "svg_path": "/content/task4_outputs_e7/samples/svg/uncond_06_t0.5.svg",
+    "render_ok": true,
+    "png_path": "/content/task4_outputs_e7/samples/png/uncond_06_t0.5.png"
+  },
+  {
+    "type": "unconditional",
+    "i": 7,
+    "temperature": 0.8,
+    "top_k": 50,
+    "top_p": 0.95,
+    "svg_path": "/content/task4_outputs_e7/samples/svg/uncond_07_t0.8.svg",
+    "render_ok": false,
+    "png_path": "/content/task4_outputs_e7/samples/png/uncond_07_t0.8.png"
+  },
+  {
+    "type": "unconditional",
+    "i": 8,
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 0.95,
+    "svg_path": "/content/task4_outputs_e7/samples/svg/uncond_08_t1.svg",
+    "render_ok": true,
+    "png_path": "/content/task4_outputs_e7/samples/png/uncond_08_t1.png"
+  },
+  {
+    "type": "unconditional",
+    "i": 9,
+    "temperature": 0.5,
+    "top_k": 50,
+    "top_p": 0.95,
+    "svg_path": "/content/task4_outputs_e7/samples/svg/uncond_09_t0.5.svg",
+    "render_ok": true,
+    "png_path": "/content/task4_outputs_e7/samples/png/uncond_09_t0.5.png"
+  },
+  {
+    "type": "prefix",
+    "i": 0,
+    "temperature": 0.5,
+    "top_k": 50,
+    "top_p": 0.95,
+    "prefix": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><circle cx=\"24\" cy=\"28\" r=\"6\"/>",
+    "svg_path": "/content/task4_outputs_e7/samples/svg/prefix_00_t0.5.svg",
+    "render_ok": false,
+    "png_path": "/content/task4_outputs_e7/samples/png/prefix_00_t0.5.png"
+  },
+  {
+    "type": "prefix",
+    "i": 1,
+    "temperature": 0.8,
+    "top_k": 50,
+    "top_p": 0.95,
+    "prefix": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><path d=\"M10 32 L54 32",
+    "svg_path": "/content/task4_outputs_e7/samples/svg/prefix_01_t0.8.svg",
+    "render_ok": true,
+    "png_path": "/content/task4_outputs_e7/samples/png/prefix_01_t0.8.png"
+  },
+  {
+    "type": "prefix",
+    "i": 2,
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 0.95,
+    "prefix": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><g><rect x=\"8\" y=\"8\" width=\"16\" height=\"16\"/></g>",
+    "svg_path": "/content/task4_outputs_e7/samples/svg/prefix_02_t1.svg",
+    "render_ok": false,
+    "png_path": "/content/task4_outputs_e7/samples/png/prefix_02_t1.png"
+  },
+  {
+    "type": "prefix",
+    "i": 3,
+    "temperature": 0.5,
+    "top_k": 50,
+    "top_p": 0.95,
+    "prefix": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><circle cx=\"32\" cy=\"32\" r=\"20\"/><circle cx=\"24\" cy=\"28\" r=\"3\"/>",
+    "svg_path": "/content/task4_outputs_e7/samples/svg/prefix_03_t0.5.svg",
+    "render_ok": false,
+    "png_path": "/content/task4_outputs_e7/samples/png/prefix_03_t0.5.png"
+  },
+  {
+    "type": "prefix",
+    "i": 4,
+    "temperature": 0.8,
+    "top_k": 50,
+    "top_p": 0.95,
+    "prefix": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><path d=\"M16 16 C 20 10, 44 10, 48 16",
+    "svg_path": "/content/task4_outputs_e7/samples/svg/prefix_04_t0.8.svg",
+    "render_ok": true,
+    "png_path": "/content/task4_outputs_e7/samples/png/prefix_04_t0.8.png"
+  }
+]

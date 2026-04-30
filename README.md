@@ -165,6 +165,8 @@ python -m scripts.task3.plot_sp_vs_mup --task2-dir outputs/task2 --task3-dir out
 
 - **Part 1:** `reports/task1_data_preprocessing_report.md` — corpus, tokenizer, splits, statistics, figures.
 - **Part 2:** `reports/task2_transformer_scaling_report.md` — LR sweep, scaling law, tables, Colab/T4/A100 notes.
+- **Part 3:** `reports/task3_mup_scaling_and_extrapolation_report.md` — μP reparameterization, LR transfer, scaling + extrapolation.
+- **Part 4:** `reports/task4_best_model_training_and_generation_report.md` — best-model long training, sampling, evaluation, rendered grid.
 
 ---
 
